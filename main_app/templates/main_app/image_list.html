@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+{% if image_list %}
+<ul>
+    {% for image in image_list %}
+    <div class="container d-flex d-sm-flex d-xl-flex justify-content-center align-items-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center"
+         style="margin-bottom: 40px;width: 100%;">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{{ image.name }}</h4><img style="background-size: cover;object-fit: contain;background-color: #000000;background-position: center;margin-bottom: 24px;height: 900px;width: 900px;" src="/feed/image/{{ image.pk }}">
+            <h6 class="text-muted card-subtitle mb-2">Uploaded by <a href="user/{{ image.username }}">{{ image.username }}</a> on {{ image.date_created }}</h6>
+            {% if image.date_created != image.date_modified %}
+            <p class="card-text">modified on {{ image.date_modified }}</p>
+            {% endif %}
+            <p class="card-text" style="width:900px">{{ image.description }}</p>
+            {% if user.get_username == image.username %}
+            <a class="card-link" href="edit/{{ image.pk }}">Edit</a>
+            {% endif %}
+            </div>
+    </div>
+    </div>
+    {% endfor %}
+</ul>
+{% else %}
+<p>There are no images to show.</p>
+{% endif %}
+{% endblock %}

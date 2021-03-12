@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+
+<body id="page-top">
+<nav class="navbar navbar-light navbar-expand-lg fixed-top bg-secondary text-uppercase" id="mainNav">
+    <div class="container"><a class="navbar-brand js-scroll-trigger" href="{% url 'index' %}">Pringe</a><button data-toggle="collapse" data-target="#navbarResponsive" class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" aria-controls="navbarResponsive"
+                                                                                                        aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'upload' %}">Upload</a></li>
+                {% if user.is_authenticated %}
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="user/{{user.get_username}}">User: {{ user.get_username }}</a></li>
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'logout' %}?next={{request.path}}">Logout</a></li>
+                {% else %}
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'login' %}?next={{request.path}}">Login</a></li>
+                <li class="nav-item mx-0 mx-lg-1" role="presentation"><a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="{% url 'register'%}?next={{request.path}}">Register</a></li>
+                {% endif %}
+                <input type="search" id="input" onsearch="search()">
+                <script>
+                function search() {
+                var str = document.getElementById("input").value;
+                if (str == "") {
+                return;
+                }
+                window.location.href = '/feed/search/' + str
+                }
+                </script>
+                <button class="btn btn-primary" type="button" onclick="search()">Search</button>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="masthead bg-primary text-white text-center"></header>
+<section id="1" class="">
+<div class="row">
+    <div class="container d-flex d-sm-flex d-xl-flex justify-content-center align-items-center align-items-sm-center justify-content-md-center align-items-md-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+</section>
+<section id="2" class="bg-primary text-white mb-0"></section>
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>Copyright ©&nbsp;James Cox 2021</small></div>
+</div>
+<div class="d-lg-none scroll-to-top position-fixed rounded"><a class="d-block js-scroll-trigger text-center text-white rounded" href="#page-top"><i class="fa fa-chevron-up"></i></a></div>
+</body>
+
+</html>
